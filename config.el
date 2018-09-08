@@ -1,6 +1,8 @@
 ;;; ~/.doom.d/config.el -*- lexical-binding: t; -*-
 
-(setq doom-font (font-spec :family "Fira Mono Medium" :size 14)
+(setq doom-leader-key "SPC"
+      doom-localleader-key ","
+      doom-font (font-spec :family "Fira Mono Medium" :size 14)
       doom-big-font (font-spec :family "Fira Mono Medium" :size 19)
       doom-scratch-buffer-major-mode 'emacs-lisp-mode)
 
