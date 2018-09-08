@@ -2,6 +2,6 @@
 ;;; ~/.doom.d/packages.el
 
 (package! reverse-im)
-(package! docker)
-(package! docker-tramp)
-(package! dockerfile-mode)
+(package! google-translate)
+(package! link-hint)
+(package! olivetti)
