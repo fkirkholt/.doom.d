@@ -4,16 +4,22 @@
       doom-localleader-key ","
       doom-font (font-spec :family "Fira Mono Medium" :size 14)
       doom-big-font (font-spec :family "Fira Mono Medium" :size 19)
-      doom-scratch-buffer-major-mode 'emacs-lisp-mode)
+      doom-scratch-buffer-major-mode 'emacs-lisp-mode
 
-(setq initial-major-mode 'emacs-lisp-mode
+      ;; initial-major-mode 'emacs-lisp-mode ; makes startup a little bit slow
       frame-resize-pixelwise t
       vc-follow-symlinks t
       inhibit-compacting-font-caches t
       make-backup-files nil
       create-lockfiles nil
       backward-delete-char-untabify-method 'untabify
-      calendar-week-start-day 1)
+      calendar-week-start-day 1
+
+      projects-directory "~/Projects"
+      magit-repository-directories `((,doom-private-dir . 0)
+                                     (,doom-emacs-dir . 0)
+                                     (,projects-directory . 1))
+      magit-save-repository-buffers nil)
 
 (when window-system
   (setq frame-parameters '((left . 0.5) (top . 0.5)
@@ -34,74 +40,62 @@
             browse-url-generic-args     cmd-args
             browse-url-browser-function 'browse-url-generic))))
 
-(setq projects-directory "~/Projects")
-
-(setq magit-repository-directories `((,doom-private-dir . 0)
-                                     (,doom-emacs-dir . 0)
-                                     (,projects-directory . 1))
-      magit-save-repository-buffers nil)
-
 (def-package! reverse-im
   :config
   (reverse-im-activate "russian-computer")
   (after! evil
     ;; cyrillic tweaks
-    (define-key evil-normal-state-map (kbd "C-х") 'evil-force-normal-state)
-    (define-key evil-insert-state-map (kbd "C-х") 'evil-normal-state)
-    (define-key evil-visual-state-map (kbd "C-х") 'evil-exit-visual-state)))
+    (define-key evil-normal-state-map (kbd "C-х") #'evil-force-normal-state)
+    (define-key evil-insert-state-map (kbd "C-х") #'evil-normal-state)
+    (define-key evil-visual-state-map (kbd "C-х") #'evil-exit-visual-state)))
 
 (setq org-ellipsis "…"
-        org-hide-emphasis-markers nil ; hide markup elements, e.g. * *, / /, _ _
-        org-list-allow-alphabetical t
-        org-log-into-drawer t
-        org-startup-indented t
-        org-pretty-entities t
-        org-edit-src-content-indentation 0
-        org-src-window-setup 'current-window
-        org-tags-column 0
-        org-agenda-tags-column 0
-        org-directory "~/Dropbox/Org"
-        org-default-inbox-file (concat org-directory "/inbox.org")
-        org-default-todo-file (concat org-directory "/todo.org")
-        org-default-notes-file (concat org-directory "/notes.org")
-        org-agenda-files `(,org-default-todo-file ,org-default-inbox-file)
-        org-archive-location (concat org-directory "/old/archive.org" "::* From %s")
-        org-bullets-bullet-list '("#"))
+      org-list-allow-alphabetical t
+      org-log-into-drawer t
+      org-startup-indented t
+      org-pretty-entities t
+      org-edit-src-content-indentation 0
+      org-src-window-setup 'current-window
+      org-tags-column 0
+      org-agenda-tags-column 0
+      org-directory "~/Dropbox/Org"
+      org-default-inbox-file (concat org-directory "/inbox.org")
+      org-default-todo-file (concat org-directory "/todo.org")
+      org-default-notes-file (concat org-directory "/notes.org")
+      org-agenda-files `(,org-default-todo-file ,org-default-inbox-file)
+      org-archive-location (concat org-directory "/old/archive.org" "::* From %s")
+      org-bullets-bullet-list '("#")
+      evil-org-special-o/O '(item table-row)
+      evil-org-key-theme '(textobjects insert navigation todo heading))
 
-(add-to-list 'evil-org-special-o/O 'item)
+;; overriding org module settings
+(after! org
+  ;; hide markup elements, e.g. * *, / /, _ _
+  (setq org-hide-emphasis-markers t))
 
-;; TODO integrate with doom-emacs bindings
-;; (def-package! org-expiry)
-
-;; (after! org
-;;   (org-expiry-insinuate))
-
-;; FIXME evil-snipe? M-t?
-;; (after! evil-org
-;;   (setq evil-org-key-theme `(textobjects
-;;                              navigation
-;;                              additional
-;;                              insert
-;;                              todo)))
+(def-package! org-expiry
+  :after org
+  :config (org-expiry-insinuate))
 
 (def-package! google-translate
-  :config
+  :commands (google-translate-at-point google-translate-at-point-reverse)
+  :init
   (setq google-translate-default-target-language "ru"
-        google-translate-default-source-language "en")
-  (map! :leader
-        :prefix "h"
-        :n "t" #'google-translate-at-point
-        :n "T" #'google-translate-at-point-reverse))
+        google-translate-default-source-language "en"))
 
 (def-package! link-hint
-  :config
-  (map! :leader
-        :prefix "o"
-        :desc "Open link" :n "l" #'link-hint-open-link))
+  :commands link-hint-open-link)
 
 (def-package! olivetti
+  :commands olivetti-mode
   :config
-  (setq-default olivetti-body-width 100)
-  (map! :leader
-        :prefix "t"
-        :desc "Olivetti mode" :n "o" #'olivetti-mode))
+  (setq olivetti-body-width 100))
+
+(map! :leader
+      (:prefix "h"
+        :desc "Translate"         :n "t" #'google-translate-at-point
+        :desc "Translate reverse" :n "T" #'google-translate-at-point-reverse)
+      (:prefix "t"
+        :desc "Olivetti"          :n "o" #'olivetti-mode)
+      (:prefix "o"
+        :desc "Link"              :n "l" #'link-hint-open-link))
