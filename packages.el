@@ -5,3 +5,4 @@
 (package! google-translate)
 (package! link-hint)
 (package! olivetti)
+(package! password-generator)
