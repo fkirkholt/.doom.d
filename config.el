@@ -21,8 +21,6 @@
                                      (,projects-directory . 1))
       magit-save-repository-buffers nil)
 
-(remove-hook! '(prog-mode-hook text-mode-hook conf-mode-hook) #'hl-line-mode)
-
 (when window-system
   (setq frame-parameters '((left . 0.5) (top . 0.5)
                            (width . 0.7) (height . 0.9)))
