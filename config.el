@@ -1,7 +1,7 @@
 ;;; ~/.doom.d/config.el -*- lexical-binding: t; -*-
 
 (setq doom-leader-key "SPC"
-      doom-localleader-key ","
+      doom-localleader-key "SPC m"
       doom-font (font-spec :family "Fira Mono Medium" :size 14)
       doom-big-font (font-spec :family "Fira Mono Medium" :size 19)
       doom-scratch-buffer-major-mode 'emacs-lisp-mode
@@ -49,7 +49,8 @@
     (define-key evil-insert-state-map (kbd "C-х") #'evil-normal-state)
     (define-key evil-visual-state-map (kbd "C-х") #'evil-exit-visual-state)))
 
-(setq org-ellipsis "…"
+(setq org-ellipsis " ▼ " ; "…"
+      org-hide-emphasis-markers nil ; hide markup elements, e.g. * *, / /, _ _
       org-list-allow-alphabetical t
       org-log-into-drawer t
       org-startup-indented t
@@ -66,12 +67,7 @@
       org-archive-location (concat org-directory "/old/archive.org" "::* From %s")
       org-bullets-bullet-list '("#")
       evil-org-special-o/O '(item table-row)
-      evil-org-key-theme '(textobjects insert navigation todo heading))
-
-;; overriding org module settings
-(after! org
-  ;; hide markup elements, e.g. * *, / /, _ _
-  (setq org-hide-emphasis-markers t))
+      evil-org-key-theme '(textobjects insert navigation heading))
 
 (def-package! org-expiry
   :after org
