@@ -14,6 +14,7 @@
       create-lockfiles nil
       backward-delete-char-untabify-method 'untabify
       calendar-week-start-day 1
+      dired-dwim-target t
 
       projects-directory "~/Projects"
       magit-repository-directories `((,doom-private-dir . 0)
