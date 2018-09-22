@@ -5,6 +5,7 @@
       doom-font (font-spec :family "Fira Mono Medium" :size 14)
       doom-big-font (font-spec :family "Fira Mono Medium" :size 19)
       doom-scratch-buffer-major-mode 'emacs-lisp-mode
+      +workspaces-switch-project-function #'ignore
 
       ;; initial-major-mode 'emacs-lisp-mode ; makes startup a little bit slow
       frame-resize-pixelwise t
