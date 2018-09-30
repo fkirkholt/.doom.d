@@ -2,22 +2,20 @@
 
 (setq doom-leader-key "SPC"
       doom-localleader-key "SPC m"
-      doom-font (font-spec :family "Fira Mono Medium" :size 14)
-      doom-big-font (font-spec :family "Fira Mono Medium" :size 19)
+      doom-font "Fira Mono Medium 14"
       doom-scratch-buffer-major-mode 'emacs-lisp-mode
-      +workspaces-switch-project-function #'ignore
+      +workspaces-switch-project-function #'ignore)
 
-      ;; initial-major-mode 'emacs-lisp-mode ; makes startup a little bit slow
-      frame-resize-pixelwise t
+(setq frame-resize-pixelwise t
       vc-follow-symlinks t
       inhibit-compacting-font-caches t
       make-backup-files nil
       create-lockfiles nil
       backward-delete-char-untabify-method 'untabify
       calendar-week-start-day 1
-      dired-dwim-target t
+      dired-dwim-target t)
 
-      projects-directory "~/Projects"
+(setq projects-directory "~/Projects"
       magit-repository-directories `((,doom-private-dir . 0)
                                      (,doom-emacs-dir . 0)
                                      (,projects-directory . 1))

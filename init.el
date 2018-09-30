@@ -10,20 +10,20 @@
         +docsets)        ; ...or in Dash docsets locally
        snippets          ; my elves. They type so I don't have to
        spellcheck        ; tasing you for misspelling mispelling
-       (syntax-checker   ; tasing you for every semicolon you forget
-        +childframe)     ; use childframes for error popups (Emacs 26+ only)
+       (syntax-checker)  ; tasing you for every semicolon you forget
+       ;; +childframe)     ; use childframes for error popups (Emacs 26+ only)
        workspaces        ; tab emulation, persistence & separate workspaces
 
        :completion
        (company          ; the ultimate code completion backend
-        +auto            ; as-you-type code completion
-        +childframe)
+        +auto)           ; as-you-type code completion
+       ;; +childframe)
        ;;(helm             ; the *other* search engine for love and life
        ;; +fuzzy)          ; enable fuzzy search backend for helm
        ;;ido               ; the other *other* search engine...
        (ivy              ; a search engine for love and life
-        +fuzzy           ; enable fuzzy search backend for ivy
-        +childframe)
+        +fuzzy)          ; enable fuzzy search backend for ivy
+       ;; +childframe)
 
        :ui
        ;;deft              ; notational velocity for Emacs
